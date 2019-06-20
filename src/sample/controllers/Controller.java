@@ -9,13 +9,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import sample.bmp.BMPDecoder;
+import sample.bmp.Bmp;
+import sample.bmp.BmpWriter;
 import sample.filters.Aquarelle;
 import sample.filters.Filter;
+import sample.filters.Mosaic;
 import sample.filters.Stamping;
 import sample.jpeg.JpegEncoder;
-import sample.bmp.Bmp;
-import sample.bmp.BMPDecoder;
-import sample.bmp.BmpWriter;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -128,6 +129,14 @@ public class Controller {
             else{
                 showAlert("Картинки нет");
             }
+        });
+
+        mosaicItem.setOnAction(event -> {
+            Mosaic mosaic = new Mosaic();
+            imageView2.setFitHeight(imageView1.getFitHeight());
+            imageView2.setFitWidth(imageView1.getFitWidth());
+
+            drawImage(mosaic.process(bmp.getPixels()), imageView2);
         });
 
         fileMenu.getItems().addAll(openFileItem, saveBMPItem, saveJPEGItem);
